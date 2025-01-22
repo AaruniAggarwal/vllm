@@ -4,8 +4,6 @@ USER root
 
 ENV PATH="/usr/local/cargo/bin:$PATH:/opt/conda/bin/"
 
-ENV PIP_EXTRA_INDEX_URL=$PIP_EXTRA_INDEX_URL
-
 RUN echo $PIP_EXTRA_INDEX_URL
 
 RUN apt-get update -y && apt-get install -y git gdb wget curl vim libnuma-dev libsndfile-dev libprotobuf-dev build-essential ffmpeg libsm6 libxext6 libopenblas-dev libgl1 libssl-dev libtiff5-dev libjpeg62-turbo-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk libharfbuzz-dev libfribidi-dev libxcb1-dev libre2-dev libutf8proc-dev procps
