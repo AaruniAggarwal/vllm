@@ -27,7 +27,7 @@ function cpu_tests() {
   # Run basic model test
   docker exec cpu-test bash -c "
     set -e
-    apt install gfortran
+    apt install -y gfortran
     pip install pytest pytest-asyncio einops peft Pillow sentence-transformers soundfile transformers_stream_generator matplotlib 
     pip install datamodel_code_generator
     micromamba install -y numba librosa
