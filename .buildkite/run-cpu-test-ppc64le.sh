@@ -27,8 +27,10 @@ function cpu_tests() {
   # Run basic model test
   docker exec cpu-test bash -c "
     set -e
+    apt install gfortran
     pip install pytest pytest-asyncio einops peft Pillow sentence-transformers soundfile transformers_stream_generator matplotlib 
     pip install datamodel_code_generator
+    micromamba install -y numba librosa
     pytest -v -s tests/models/embedding/language/test_cls_models.py::test_classification_models[float-jason9693/Qwen2.5-1.5B-apeach]
     pytest -v -s tests/models/embedding/language/test_embedding.py::test_models[half-BAAI/bge-base-en-v1.5]
     pytest -v -s tests/models/encoder_decoder/language -m cpu_model
