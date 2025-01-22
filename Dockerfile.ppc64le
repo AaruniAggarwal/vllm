@@ -4,12 +4,15 @@ USER root
 
 ENV PATH="/usr/local/cargo/bin:$PATH:/opt/conda/bin/"
 
-RUN apt-get update -y && apt-get install -y git wget curl vim libnuma-dev libsndfile-dev libprotobuf-dev build-essential ffmpeg libsm6 libxext6 libgl1 libssl-dev 
+RUN apt-get update -y && apt-get install -y git gdb wget curl vim libnuma-dev libsndfile-dev libprotobuf-dev build-essential ffmpeg libsm6 libxext6 libopenblas-dev libgl1 libssl-dev libtiff5-dev libjpeg62-turbo-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk libharfbuzz-dev libfribidi-dev libxcb1-dev libre2-dev libutf8proc-dev procps
+
+RUN ulimit -c unlimited && echo '* soft core unlimited' >> /etc/security/limits.conf
 
 # Some packages in requirements-cpu are installed here
 # IBM provides optimized packages for ppc64le processors in the open-ce project for mamba
 # Currently these may not be available for venv or pip directly
-RUN micromamba install -y -n base -c https://ftp.osuosl.org/pub/open-ce/1.11.0-p10/ -c defaults python=3.10 torchvision-cpu=0.16.2 rust && micromamba clean --all --yes
+
+RUN micromamba install -y -n base -c https://ftp.osuosl.org/pub/open-ce/1.11.0-p10/ -c defaults python=3.11 rust && micromamba clean --all --yes
 
 COPY ./ /workspace/vllm
 
@@ -19,11 +22,11 @@ RUN --mount=type=bind,source=.git,target=.git \
     if [ "$GIT_REPO_CHECK" != 0 ]; then bash tools/check_repo.sh; fi
 
 RUN --mount=type=cache,target=/root/.cache/pip  \
+    pip install -v --prefer-binary  pyarrow==18.1.0 torch==2.5.1 torchvision==0.20.1a0 xformers && \
     RUSTFLAGS='-L /opt/conda/lib' pip install -v --prefer-binary --extra-index-url https://repo.fury.io/mgiessing \
         'cmake>=3.26' ninja packaging 'setuptools-scm>=8' wheel jinja2 \
-        torch==2.3.1 \
         -r requirements-cpu.txt \
-        xformers uvloop==0.20.0
+        uvloop==0.20.0
 
 RUN --mount=type=bind,source=.git,target=.git \
     VLLM_TARGET_DEVICE=cpu python3 setup.py install
@@ -34,5 +37,18 @@ RUN python3 -m pip install -e tests/vllm_test_utils
 WORKDIR /workspace/
 
 RUN ln -s /workspace/vllm/tests && ln -s /workspace/vllm/examples && ln -s /workspace/vllm/benchmarks
+
+# Set up the environment for the non-root user
+RUN umask 002 \
+    && mkdir -p /home/vllm \
+    && useradd --uid 2000 --gid 0 vllm \
+    && chmod g+rwx $HOME /usr/src /workspace/vllm
+
+# Set environment variables
+ENV HF_HUB_OFFLINE=0 \
+    PORT=8000 \
+    HOME=/home/vllm \
+    VLLM_USAGE_SOURCE=production-docker-image \
+    VLLM_WORKER_MULTIPROC_METHOD=fork
 
 ENTRYPOINT ["/opt/conda/bin/python3", "-m", "vllm.entrypoints.openai.api_server"]
