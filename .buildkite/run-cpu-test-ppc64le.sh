@@ -17,10 +17,11 @@ docker run -itd --entrypoint /bin/bash -v ~/.cache/huggingface:/root/.cache/hugg
 
 function cpu_tests() {
   set -e
-
+  
   # offline inference
   docker exec cpu-test bash -c "
     set -e
+    export PATH=/opt/conda/bin:$PATH
     python3 examples/offline_inference/basic.py"
 
   # Run basic model test
