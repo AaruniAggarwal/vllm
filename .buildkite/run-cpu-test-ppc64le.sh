@@ -36,7 +36,7 @@ function cpu_tests() {
     pytest -v -s tests/models/embedding/language/test_cls_models.py::test_classification_models[float-jason9693/Qwen2.5-1.5B-apeach]
     pytest -v -s tests/models/embedding/language/test_embedding.py::test_models[half-BAAI/bge-base-en-v1.5]
     pytest -v -s tests/models/encoder_decoder/language -m cpu_model
-    pytest -v -s tests/models/decoder_only/audio_language/test_ultravox.py::test_online_inference[server0]
+    pytest -v -s tests/models/decoder_only/audio_language/test_ultravox.py::test_online_serving[server0]
     pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_video_models[qwen2_vl-test_case0]
     pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_image_embedding_models[llava-test_case0]
     pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_multi_image_models[qwen2_vl-test_case20]
