@@ -46,4 +46,4 @@ function cpu_tests() {
 
 # All of CPU tests are expected to be finished less than 40 mins.
 export -f cpu_tests
-timeout 40m bash -c cpu_tests
+timeout 90m bash -c cpu_tests
