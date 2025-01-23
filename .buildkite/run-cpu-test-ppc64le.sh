@@ -32,7 +32,7 @@ function cpu_tests() {
     pip install datamodel_code_generator
     micromamba install -y numba librosa
     cp /opt/conda/lib/libstdc++.so.6.0.33 /usr/lib/powerpc64le-linux-gnu/
-    ln -sf libstdc++.so.6.0.33 libstdc++.so.6 && export LD_LIBRARY_PATH=/usr/lib/powerpc64le-linux-gnu/libstdc++.so.6.0.33:$LD_LIBRARY_PATH
+    ln -sf /usr/lib/powerpc64le-linux-gnu/libstdc++.so.6.0.33 /usr/lib/powerpc64le-linux-gnu/libstdc++.so.6 && export LD_LIBRARY_PATH=/usr/lib/powerpc64le-linux-gnu/libstdc++.so.6.0.33:$LD_LIBRARY_PATH
     pytest -v -s tests/models/embedding/language/test_cls_models.py::test_classification_models[float-jason9693/Qwen2.5-1.5B-apeach]
     pytest -v -s tests/models/embedding/language/test_embedding.py::test_models[half-BAAI/bge-base-en-v1.5]
     pytest -v -s tests/models/encoder_decoder/language -m cpu_model
