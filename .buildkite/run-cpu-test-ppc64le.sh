@@ -33,15 +33,19 @@ function cpu_tests() {
     micromamba install -y numba librosa
     cp /opt/conda/lib/libstdc++.so.6.0.33 /usr/lib/powerpc64le-linux-gnu/
     ln -sf /usr/lib/powerpc64le-linux-gnu/libstdc++.so.6.0.33 /usr/lib/powerpc64le-linux-gnu/libstdc++.so.6 && export LD_LIBRARY_PATH=/usr/lib/powerpc64le-linux-gnu/libstdc++.so.6.0.33:$LD_LIBRARY_PATH
+    time_now="$(date +"%r")"
+    printf "Testcase started at %s\n" "$time_now"
     pytest -v -s tests/models/embedding/language/test_cls_models.py::test_classification_models[float-jason9693/Qwen2.5-1.5B-apeach]
     pytest -v -s tests/models/embedding/language/test_embedding.py::test_models[half-BAAI/bge-base-en-v1.5]
     pytest -v -s tests/models/encoder_decoder/language -m cpu_model
     pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_video_models[qwen2_vl-test_case0]
     pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_image_embedding_models[llava-test_case0]
-    pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_multi_image_models
+    pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_multi_image_models[qwen-test_case20]
     pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_single_image_models[qwen2_vl-test_case20]
     pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_single_image_models[llava-test_case56]
     pytest -v -s tests/models/decoder_only/audio_language/test_ultravox.py::test_online_serving[server0]"
+    time_now="$(date +"%r")"
+    printf "Testcase finished at %s\n" "$time_now"
 }
 
 # All of CPU tests are expected to be finished less than 40 mins.
