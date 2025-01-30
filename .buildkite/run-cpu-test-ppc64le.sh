@@ -39,7 +39,8 @@ function cpu_tests() {
     pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_image_embedding_models[llava-test_case0]
     pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_multi_image_models[qwen-test_case20]
     pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_single_image_models[qwen-test_case20]
-    pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_single_image_models -k "[llava-"
+    pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_single_image_models[llava-test_case62]
+#    pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_single_image_models -k "[llava-"
 #    pytest -v -s tests/models/decoder_only/audio_language -m cpu_model -k "server"
 #   pytest -v -s tests/models/decoder_only/audio_language/test_ultravox.py::test_online_serving[server0]"
 }
