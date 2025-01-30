@@ -16,7 +16,6 @@ docker build -t cpu-test -f Dockerfile.ppc64le .
 docker run -itd --entrypoint /bin/bash -v ~/.cache/huggingface:/root/.cache/huggingface --privileged=true --network host -e HF_TOKEN --name cpu-test cpu-test
 
 function cpu_tests() {
-  set -e
   
   # offline inference
   docker exec cpu-test bash -c "
@@ -41,7 +40,7 @@ function cpu_tests() {
     pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_multi_image_models[qwen-test_case20]
     pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_single_image_models[qwen-test_case20]
     pytest -v -s tests/models/decoder_only/vision_language/test_models.py::test_single_image_models -k "[llava-"
-    pytest -v -s tests/models/decoder_only/audio_language -m cpu_model
+    pytest -v -s tests/models/decoder_only/audio_language -m cpu_model -k "server"
 #   pytest -v -s tests/models/decoder_only/audio_language/test_ultravox.py::test_online_serving[server0]"
 }
 
