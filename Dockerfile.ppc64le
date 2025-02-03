@@ -24,7 +24,7 @@ RUN --mount=type=bind,source=.git,target=.git \
     if [ "$GIT_REPO_CHECK" != 0 ]; then bash tools/check_repo.sh; fi
 
 RUN --mount=type=cache,target=/root/.cache/pip  \
-    pip install -v --prefer-binary  --extra-index-url="$PIP_EXTRA_INDEX_URL" --trusted-host="$TRUSTED_HOST" pyarrow==18.1.0 torch==2.5.1 torchvision==0.20.1a0 xformers && \
+    pip install -v --prefer-binary  --extra-index-url="$PIP_EXTRA_INDEX_URL" --trusted-host="$TRUSTED_HOST" pyarrow==18.1.0 torch==2.5.1 torchvision==0.20.1 xformers && \
     RUSTFLAGS='-L /opt/conda/lib' pip install -v --prefer-binary --extra-index-url https://repo.fury.io/mgiessing \
         'cmake>=3.26' ninja packaging 'setuptools-scm>=8' wheel jinja2 \
         -r requirements-cpu.txt \
