@@ -25,7 +25,7 @@ function cpu_tests() {
 
   # Run basic model test
   docker exec cpu-test bash -c "
-    
+    pip cache purge
     apt install -y gfortran
     pip install pytest pytest-asyncio einops peft Pillow sentence-transformers soundfile transformers_stream_generator matplotlib 
     pip install datamodel_code_generator
