@@ -8,7 +8,7 @@ export PIP_EXTRA_INDEX_URL=https://${ARTIFACTORY_USER}:${ARTIFACTORY_TOKEN}@na.a
 export TRUSTED_HOST=na.artifactory.swg-devops.com
 
 # Setup cleanup
-remove_docker_container() { docker rm -f cpu-test || true; docker system prune -f; }
+remove_docker_container() { docker rm -f cpu-test-ubi9 || true; docker system prune -f; }
 trap remove_docker_container EXIT
 remove_docker_container
 
