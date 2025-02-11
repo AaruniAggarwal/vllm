@@ -30,7 +30,7 @@ function cpu_tests() {
     pip cache purge
     dnf install gcc gcc-c++ gcc-gfortran libsndfile -y
     pip install pytest pytest-asyncio einops peft Pillow  soundfile transformers_stream_generator
-    python -m pip install matplotlib==3.10.0 scikit-learn==1.1.1 llvmlite==0.44.0 numba==0.61.0 --extra-index-url $PIP_EXTRA_INDEX_URL --trusted-host="$TRUSTED_HOST"
+    python -m pip install matplotlib==3.10.0 llvmlite==0.44.0 numba==0.61.0 --extra-index-url $PIP_EXTRA_INDEX_URL --trusted-host="$TRUSTED_HOST"
     pip install sentence-transformers librosa datamodel_code_generator
     pytest -v -s tests/models/embedding/language/test_cls_models.py::test_classification_models[float-jason9693/Qwen2.5-1.5B-apeach]
     pytest -v -s tests/models/embedding/language/test_embedding.py::test_models[half-BAAI/bge-base-en-v1.5]
