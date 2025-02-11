@@ -27,7 +27,7 @@ function cpu_tests() {
 
   # Run basic model test
   docker exec cpu-test-ubi9 bash -c "
-    pip cache purge
+    which vllm && vllm --version
     dnf install gcc gcc-c++ gcc-gfortran libsndfile -y
     pip install pytest pytest-asyncio einops peft Pillow  soundfile transformers_stream_generator
     python -m pip install matplotlib==3.10.0 llvmlite==0.44.0 numba==0.61.0 --extra-index-url $PIP_EXTRA_INDEX_URL --trusted-host="$TRUSTED_HOST"
@@ -35,6 +35,7 @@ function cpu_tests() {
     pytest -v -s tests/models/embedding/language/test_cls_models.py::test_classification_models[float-jason9693/Qwen2.5-1.5B-apeach]
     pytest -v -s tests/models/embedding/language/test_embedding.py::test_models[half-BAAI/bge-base-en-v1.5]
     pytest -v -s tests/models/encoder_decoder/language -m cpu_model
+    which vllm && vllm --version
     pytest -v -s tests/models/decoder_only/audio_language -m cpu_model -k "server" "
 }
 
