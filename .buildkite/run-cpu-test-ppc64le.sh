@@ -27,7 +27,8 @@ function cpu_tests() {
 
   # Run basic model test
   docker exec cpu-test-ubi9 bash -c "
-    which vllm && vllm --version
+    which vllm &&  /usr/local/bin/vllm --version
+
     dnf install gcc gcc-c++ gcc-gfortran libsndfile -y
     pip install pytest pytest-asyncio einops peft Pillow  soundfile transformers_stream_generator
     python -m pip install matplotlib==3.10.0 llvmlite==0.44.0 numba==0.61.0 --extra-index-url $PIP_EXTRA_INDEX_URL --trusted-host="$TRUSTED_HOST"
