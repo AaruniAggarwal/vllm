@@ -27,6 +27,7 @@ function cpu_tests() {
 
   # Run basic model test
   docker exec cpu-test-ubi9 bash -c "
+    pip show setuptools_scm 
     which vllm &&  /usr/local/bin/vllm --version
 
     dnf install gcc gcc-c++ gcc-gfortran libsndfile -y
