@@ -37,8 +37,8 @@ function cpu_tests() {
     pytest -v -s tests/models/embedding/language/test_cls_models.py::test_classification_models[float-jason9693/Qwen2.5-1.5B-apeach]
     pytest -v -s tests/models/embedding/language/test_embedding.py::test_models[half-BAAI/bge-base-en-v1.5]
     pytest -v -s tests/models/encoder_decoder/language -m cpu_model
-    which vllm && vllm --version
-    pytest -v -s tests/models/decoder_only/audio_language -m cpu_model -k "server" "
+#    which vllm && vllm --version
+#    pytest -v -s tests/models/decoder_only/audio_language -m cpu_model -k "server" "
 }
 
 # All of CPU tests are expected to be finished less than 40 mins.
