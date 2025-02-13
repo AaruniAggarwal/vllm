@@ -29,15 +29,12 @@ function cpu_tests() {
   # Run basic model test
   docker exec cpu-test bash -c "
     pip cache purge
-    apt install -y gfortran
+    micromamba install gcc -y
     pip install pytest pytest-asyncio einops peft Pillow  soundfile transformers_stream_generator
     python -m pip install matplotlib==3.10.0 llvmlite==0.44.0 numba==0.61.0 --extra-index-url $PIP_EXTRA_INDEX_URL --trusted-host="$TRUSTED_HOST"
     pip install sentence-transformers librosa datamodel_code_generator
- #   pip install pytest pytest-asyncio einops peft Pillow sentence-transformers soundfile transformers_stream_generator matplotlib 
- #   pip install datamodel_code_generator
- #   micromamba install -y numba librosa
-    cp /opt/conda/lib/libstdc++.so.6.0.33 /usr/lib/powerpc64le-linux-gnu/
-    ln -sf /usr/lib/powerpc64le-linux-gnu/libstdc++.so.6.0.33 /usr/lib/powerpc64le-linux-gnu/libstdc++.so.6 && export LD_LIBRARY_PATH=/usr/lib/powerpc64le-linux-gnu/libstdc++.so.6.0.33:$LD_LIBRARY_PATH
+    #cp /opt/conda/lib/libstdc++.so.6.0.33 /usr/lib/powerpc64le-linux-gnu/
+    #ln -sf /usr/lib/powerpc64le-linux-gnu/libstdc++.so.6.0.33 /usr/lib/powerpc64le-linux-gnu/libstdc++.so.6 && export LD_LIBRARY_PATH=/usr/lib/powerpc64le-linux-gnu/libstdc++.so.6.0.33:$LD_LIBRARY_PATH
     pytest -v -s tests/models/embedding/language/test_cls_models.py::test_classification_models[float-jason9693/Qwen2.5-1.5B-apeach]
     pytest -v -s tests/models/embedding/language/test_embedding.py::test_models[half-BAAI/bge-base-en-v1.5]
     pytest -v -s tests/models/encoder_decoder/language -m cpu_model
