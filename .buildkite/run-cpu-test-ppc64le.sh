@@ -29,6 +29,7 @@ function cpu_tests() {
   # Run basic model test
   docker exec cpu-test bash -c "
     pip cache purge
+    apt install -y gfortran
     micromamba install gcc -y
     pip install pytest pytest-asyncio einops peft Pillow  soundfile transformers_stream_generator
     python -m pip install matplotlib==3.10.0 llvmlite==0.44.0 numba==0.61.0 --extra-index-url $PIP_EXTRA_INDEX_URL --trusted-host="$TRUSTED_HOST"
@@ -50,4 +51,4 @@ function cpu_tests() {
 
 # All of CPU tests are expected to be finished less than 40 mins.
 export -f cpu_tests
-timeout 90m bash -c cpu_tests
+timeout 60m bash -c cpu_tests
