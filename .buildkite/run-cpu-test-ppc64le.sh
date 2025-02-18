@@ -5,6 +5,7 @@
 set -ex
 
 export PIP_EXTRA_INDEX_URL=https://"'$Jfrog'"@na.artifactory.swg-devops.com/artifactory/api/pypi/sys-linux-power-team-ftp3distro-odh-pypi-local/simple/
+echo $PIP_EXTRA_INDEX_URL
 export TRUSTED_HOST=na.artifactory.swg-devops.com
 
 # Setup cleanup
