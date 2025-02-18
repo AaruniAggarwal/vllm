@@ -4,8 +4,7 @@
 # It serves a sanity check for compilation and basic model usage.
 set -ex
 
-export PIP_EXTRA_INDEX_URL=https://"'$Jfrog'"@na.artifactory.swg-devops.com/artifactory/api/pypi/sys-linux-power-team-ftp3distro-odh-pypi-local/simple/
-echo $PIP_EXTRA_INDEX_URL
+export PIP_EXTRA_INDEX_URL=https://${ARTIFACTORY_USER}:${ARTIFACTORY_TOKEN}@na.artifactory.swg-devops.com/artifactory/api/pypi/sys-linux-power-team-ftp3distro-odh-pypi-local/simple
 export TRUSTED_HOST=na.artifactory.swg-devops.com
 
 # Setup cleanup
@@ -14,7 +13,7 @@ trap remove_docker_container EXIT
 remove_docker_container
 
 # Try building the docker image
-docker build -t cpu-test -f Dockerfile.ppc64le .
+docker build --build-arg ARTIFACTORY_TOKEN=${ARTIFACTORY_TOKEN} --build-arg ARTIFACTORY_USER=${ARTIFACTORY_USER} -t cpu-test -f Dockerfile.ppc64le .
 
 # Run the image, setting --shm-size=4g for tensor parallel.
 docker run -itd --entrypoint /bin/bash -v ~/.cache/huggingface:/root/.cache/huggingface --privileged=true --network host -e HF_TOKEN --name cpu-test cpu-test
