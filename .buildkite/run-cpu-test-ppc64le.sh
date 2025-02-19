@@ -13,7 +13,7 @@ trap remove_docker_container EXIT
 remove_docker_container
 
 # Try building the docker image
-docker build --build-arg ARTIFACTORY_TOKEN=${ARTIFACTORY_TOKEN} --build-arg ARTIFACTORY_USER=${ARTIFACTORY_USER} -t cpu-test -f Dockerfile.ppc64le .
+docker build --format docker --build-arg ARTIFACTORY_TOKEN=${ARTIFACTORY_TOKEN} --build-arg ARTIFACTORY_USER=${ARTIFACTORY_USER} -t cpu-test -f Dockerfile.ppc64le .
 
 # Run the image, setting --shm-size=4g for tensor parallel.
 docker run -itd --entrypoint /bin/bash -v /tmp/:/root/.cache/huggingface --privileged=true --network host -e HF_TOKEN --name cpu-test cpu-test
