@@ -8,25 +8,25 @@ export PIP_EXTRA_INDEX_URL=https://${ARTIFACTORY_USER}:${ARTIFACTORY_TOKEN}@na.a
 export TRUSTED_HOST=na.artifactory.swg-devops.com
 
 # Setup cleanup
-remove_docker_container() { docker rm -f cpu-test-ubi9 || true; docker system prune -f; }
+remove_docker_container() { docker rm -f cpu-test-ubi9-aar || true; docker system prune -f; }
 trap remove_docker_container EXIT
 remove_docker_container
 
 # Try building the docker image
-docker build --build-arg ARTIFACTORY_TOKEN=${ARTIFACTORY_TOKEN} --build-arg ARTIFACTORY_USER=${ARTIFACTORY_USER} -t cpu-test-ubi9 -f Dockerfile-ubi9.ppc64le .
+docker build --build-arg ARTIFACTORY_TOKEN=${ARTIFACTORY_TOKEN} --build-arg ARTIFACTORY_USER=${ARTIFACTORY_USER} -t cpu-test-ubi9-aar -f Dockerfile-ubi9.ppc64le .
 
 # Run the image, setting --shm-size=4g for tensor parallel.
-docker run -itd --entrypoint /bin/bash -v /tmp/:/root/.cache/huggingface --privileged=true --network host -e HF_TOKEN --name cpu-test-ubi9 cpu-test-ubi9
+docker run -itd --entrypoint /bin/bash -v /tmp/:/root/.cache/huggingface --privileged=true --network host -e HF_TOKEN --name cpu-test-ubi9-aar cpu-test-ubi9-aar
 
 function cpu_tests() {
   
   # offline inference
-  docker exec cpu-test-ubi9 bash -c "
+  docker exec cpu-test-ubi9-aar bash -c "
     set -e
     python examples/offline_inference/basic.py"
 
   # Run basic model test
-  docker exec cpu-test-ubi9 bash -c "
+  docker exec cpu-test-ubi9-aar bash -c "
     set -x
     pip show setuptools 
     which vllm &&  /usr/local/bin/vllm --version

@@ -26,7 +26,7 @@ WORKDIR /workspace/vllm
 RUN export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH && export CXX=/opt/rh/gcc-toolset-12/root/usr/bin/g++ && source /opt/rh/gcc-toolset-12/enable && export PATH=$PATH:${CARGO_HOME}/bin && export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib64/python${PYTHON_VERSION}/site-packages/torch.libs && \
         python -m pip install -v --prefer-binary --extra-index-url $PIP_EXTRA_INDEX_URL pyarrow==18.1.0 torch==2.5.1 torchvision==0.20.1 xformers uvloop==0.20.0 opencv-python-headless && \
         python -m pip install -v outlines==0.1.11 pyzmq cmake>=3.26 ninja packaging setuptools-scm>=8 wheel jinja2 \
-        -r requirements-cpu.txt 
+        -r requirements/cpu.txt  
 
 RUN export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH && export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib64/python${PYTHON_VERSION}/site-packages/torch.libs && export CXX=/opt/rh/gcc-toolset-12/root/usr/bin/g++ && source /opt/rh/gcc-toolset-12/enable && VLLM_TARGET_DEVICE=cpu python setup.py develop
 
