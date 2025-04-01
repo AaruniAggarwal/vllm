@@ -27,7 +27,6 @@ function cpu_tests() {
 
   # Run basic model test
   docker exec cpu-test-ubi9-aar bash -c "
-    set -x
     pip show setuptools 
     which vllm &&  /usr/local/bin/vllm --version
 
