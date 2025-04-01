@@ -2,7 +2,7 @@
 
 # This script build the CPU docker image and run the offline inference inside the container.
 # It serves a sanity check for compilation and basic model usage.
-set -ex
+set -e
 
 export PIP_EXTRA_INDEX_URL=https://${ARTIFACTORY_USER}:${ARTIFACTORY_TOKEN}@na.artifactory.swg-devops.com/artifactory/api/pypi/sys-linux-power-team-ftp3distro-odh-pypi-local/simple
 export TRUSTED_HOST=na.artifactory.swg-devops.com
